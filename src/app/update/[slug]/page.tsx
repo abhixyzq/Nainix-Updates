@@ -1,15 +1,16 @@
 import Link from 'next/link';
 import { ArrowLeft, ExternalLink, Download, CalendarDays, Wallet, BookOpen, Users } from 'lucide-react';
-import dbConnect from '@/lib/dbConnect';
-import Update from '@/models/Update';
+import { fetchFromMongo } from '@/lib/mongoEdge';
+
+export const runtime = 'edge';
 
 // Fetch specific update by ID from MongoDB
 async function getUpdateDetails(id: string) {
   try {
-    await dbConnect();
-    // Using findById since our slug is the MongoDB _id
-    const update = await Update.findById(id).lean();
-    return update;
+    const data = await fetchFromMongo('findOne', {
+      filter: { _id: { $oid: id } }
+    });
+    return data.document;
   } catch (error) {
     // If the ID is an invalid format or missing, it will drop here
     return null;

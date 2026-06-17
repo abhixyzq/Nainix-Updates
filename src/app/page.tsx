@@ -1,22 +1,23 @@
 import { UpdateCard } from '@/components/UpdateCard';
-import dbConnect from '@/lib/dbConnect';
-import Update from '@/models/Update';
+import { fetchFromMongo } from '@/lib/mongoEdge';
+
+export const runtime = 'edge';
 
 // Connect to DB and fetch live data
 async function getLatestUpdates() {
   try {
-    await dbConnect();
-    // Fetch latest 20 updates, newest first, using .lean() for performance
-    const updates = await Update.find({})
-      .sort({ createdAt: -1 })
-      .limit(20)
-      .lean();
+    // Fetch latest 20 updates using MongoDB Data API
+    const data = await fetchFromMongo('find', {
+      sort: { createdAt: -1 },
+      limit: 20
+    });
     
-    // Mongoose ObjectIds must be converted to strings for Next.js serialization
+    const updates = data.documents || [];
+
+    // Map object IDs
     return updates.map((doc: any) => ({
       ...doc,
-      _id: doc._id.toString(),
-      createdAt: doc.createdAt?.toISOString(),
+      _id: doc._id, // Data API returns IDs as strings implicitly if parsed
     }));
   } catch (error) {
     console.error('Database connection failed:', error);
@@ -47,7 +48,7 @@ export default async function HomePage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {liveUpdates.map((update) => (
+            {liveUpdates.map((update: any) => (
               <UpdateCard
                 key={update._id}
                 title={update.title}
