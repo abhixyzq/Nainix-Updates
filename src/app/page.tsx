@@ -10,7 +10,7 @@ async function getLatestUpdates() {
       limit: 20
     });
     
-    const updates = data.documents || [];
+    const updates = data?.documents || [];
 
     // Map object IDs
     return updates.map((doc: any) => ({

@@ -8,7 +8,7 @@ async function getUpdateDetails(id: string) {
     const data = await fetchFromMongo('findOne', {
       filter: { _id: { $oid: id } }
     });
-    return data.document;
+    return data?.document;
   } catch (error) {
     // If the ID is an invalid format or missing, it will drop here
     return null;

@@ -38,7 +38,7 @@ export async function fetchFromMongo(action: string, payload: any) {
       }
       
       const doc = await collection.findOne(filter);
-      if (doc) doc._id = doc._id.toString();
+      if (doc) (doc as any)._id = doc._id.toString();
       result = { document: doc };
 
     } else if (action === 'insertOne') {
