@@ -1,65 +1,65 @@
-import Image from "next/image";
+import { UpdateCard } from '@/components/UpdateCard';
+import dbConnect from '@/lib/dbConnect';
+import Update from '@/models/Update';
 
-export default function Home() {
+// Connect to DB and fetch live data
+async function getLatestUpdates() {
+  try {
+    await dbConnect();
+    // Fetch latest 20 updates, newest first, using .lean() for performance
+    const updates = await Update.find({})
+      .sort({ createdAt: -1 })
+      .limit(20)
+      .lean();
+    
+    // Mongoose ObjectIds must be converted to strings for Next.js serialization
+    return updates.map((doc: any) => ({
+      ...doc,
+      _id: doc._id.toString(),
+      createdAt: doc.createdAt?.toISOString(),
+    }));
+  } catch (error) {
+    console.error('Database connection failed:', error);
+    return []; // Fallback to empty array if DB isn't connected yet
+  }
+}
+
+export default async function HomePage() {
+  const liveUpdates = await getLatestUpdates();
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+    <div className="container mx-auto px-4 py-12 md:px-8">
+      {/* Hero Section */}
+      <section className="mb-12 max-w-3xl">
+        <h1 className="mb-4 text-3xl font-extrabold tracking-tight text-slate-900 md:text-5xl lg:leading-tight">
+          Latest Education & <span className="text-blue-700">Job Updates</span>
+        </h1>
+        <p className="text-lg text-slate-600">
+          Stay ahead with the fastest, official updates for government jobs, admit cards, and exam results.
+        </p>
+      </section>
+
+      {/* Grid Layout (Live MongoDB Data) */}
+      <section>
+        {liveUpdates.length === 0 ? (
+          <div className="rounded-xl border border-slate-200 bg-white p-12 text-center text-slate-500">
+            No updates found. Please configure your MONGODB_URI and run the fetch API.
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {liveUpdates.map((update) => (
+              <UpdateCard
+                key={update._id}
+                title={update.title}
+                category={update.category}
+                lastDate={update.lastDate || 'Not Specified'}
+                eligibility={update.eligibility || 'Refer to Notification'}
+                link={`/update/${update._id}`} // Link directly to the MongoDB ID
+              />
+            ))}
+          </div>
+        )}
+      </section>
     </div>
   );
 }
