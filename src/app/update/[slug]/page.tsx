@@ -2,8 +2,6 @@ import Link from 'next/link';
 import { ArrowLeft, ExternalLink, Download, CalendarDays, Wallet, BookOpen, Users } from 'lucide-react';
 import { fetchFromMongo } from '@/lib/mongoEdge';
 
-export const runtime = 'edge';
-
 // Fetch specific update by ID from MongoDB
 async function getUpdateDetails(id: string) {
   try {

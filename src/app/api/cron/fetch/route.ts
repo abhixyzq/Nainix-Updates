@@ -3,8 +3,6 @@ import * as cheerio from 'cheerio';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { fetchFromMongo } from '@/lib/mongoEdge';
 
-export const runtime = 'edge';
-
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || 'mock-api-key-for-now');
 
 async function scrapeWebsite(url: string) {

@@ -1,8 +1,6 @@
 import { UpdateCard } from '@/components/UpdateCard';
 import { fetchFromMongo } from '@/lib/mongoEdge';
 
-export const runtime = 'edge';
-
 // Connect to DB and fetch live data
 async function getLatestUpdates() {
   try {
