@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowLeft, ExternalLink, Download, CalendarDays, Wallet, BookOpen, Users } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Download, CalendarDays, Wallet, BookOpen, Users, Globe } from 'lucide-react';
 import { fetchFromMongo } from '@/lib/mongoEdge';
 
 // Fetch specific update by ID from MongoDB
@@ -10,7 +10,6 @@ async function getUpdateDetails(id: string) {
     });
     return data?.document;
   } catch (error) {
-    // If the ID is an invalid format or missing, it will drop here
     return null;
   }
 }
@@ -18,11 +17,9 @@ async function getUpdateDetails(id: string) {
 export default async function UpdateDetailsPage(
   props: { params: Promise<{ slug: string }> }
 ) {
-  // Awaiting params for Next.js 15 compatibility
   const params = await props.params;
   const update: any = await getUpdateDetails(params.slug);
 
-  // Fallback UI if the record doesn't exist
   if (!update) {
     return (
       <div className="container mx-auto px-4 py-24 text-center">
@@ -77,22 +74,55 @@ export default async function UpdateDetailsPage(
                 <CalendarDays className="h-5 w-5 text-blue-600" />
                 Important Dates
               </h3>
-              <ul className="space-y-3 text-sm text-slate-700">
-                <li className="flex justify-between border-b border-slate-100 pb-2">
+              <div className="space-y-3 text-sm text-slate-700">
+                <div className="flex flex-col gap-1 border-b border-slate-100 pb-2">
                   <span className="font-medium text-slate-600">Last Date to Apply:</span>
                   <span className="font-semibold text-red-600">{update.lastDate || 'Not Specified'}</span>
-                </li>
-              </ul>
+                </div>
+                {update.importantDates && update.importantDates !== 'Not Specified' && (
+                  <div className="pt-2 text-slate-600">
+                    <p className="whitespace-pre-line">{update.importantDates}</p>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Application Fee Card */}
+            <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+              <h3 className="mb-4 flex items-center gap-2 text-lg font-bold text-slate-900">
+                <Wallet className="h-5 w-5 text-green-600" />
+                Application Fee
+              </h3>
+              <div className="text-sm text-slate-700">
+                {update.applicationFee && update.applicationFee !== 'Not Specified' ? (
+                  <p className="whitespace-pre-line">{update.applicationFee}</p>
+                ) : (
+                  <p className="italic text-slate-500">Fee details not provided.</p>
+                )}
+              </div>
             </div>
           </div>
+
+          {/* Vacancy Details */}
+          {(update.vacancyDetails && update.vacancyDetails !== 'Not Specified') && (
+            <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+              <h3 className="mb-4 flex items-center gap-2 text-xl font-bold text-slate-900">
+                <Users className="h-6 w-6 text-indigo-600" />
+                Vacancy Details
+              </h3>
+              <p className="whitespace-pre-line leading-relaxed text-slate-700">
+                {update.vacancyDetails}
+              </p>
+            </div>
+          )}
 
           {/* Eligibility Section */}
           <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
             <h3 className="mb-4 flex items-center gap-2 text-xl font-bold text-slate-900">
-              <BookOpen className="h-6 w-6 text-slate-700" />
+              <BookOpen className="h-6 w-6 text-amber-600" />
               Eligibility Details
             </h3>
-            <p className="leading-relaxed text-slate-700">
+            <p className="whitespace-pre-line leading-relaxed text-slate-700">
               {update.eligibility || 'Please refer to the official notification for complete eligibility details.'}
             </p>
           </div>
@@ -106,14 +136,38 @@ export default async function UpdateDetailsPage(
             
             <div className="flex flex-col gap-4">
               <a 
-                href={update.officialLink} 
+                href={update.applyLink || update.officialLink || '#'} 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-3 font-semibold text-white transition-all hover:bg-blue-700 hover:shadow-md"
               >
-                Apply / Official Site
+                Apply Online
                 <ExternalLink className="h-4 w-4" />
               </a>
+
+              {(update.notificationLink && update.notificationLink !== '#') && (
+                <a 
+                  href={update.notificationLink} 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-red-500 px-4 py-3 font-semibold text-white transition-all hover:bg-red-600 hover:shadow-md"
+                >
+                  Download Notification
+                  <Download className="h-4 w-4" />
+                </a>
+              )}
+
+              {(update.officialWebsiteLink && update.officialWebsiteLink !== '#') && (
+                <a 
+                  href={update.officialWebsiteLink} 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-slate-800 px-4 py-3 font-semibold text-white transition-all hover:bg-slate-900 hover:shadow-md"
+                >
+                  Official Website
+                  <Globe className="h-4 w-4" />
+                </a>
+              )}
             </div>
             
             <div className="mt-6 rounded-lg bg-slate-50 p-4 text-center text-xs text-slate-500">
