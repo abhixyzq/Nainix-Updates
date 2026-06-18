@@ -1,123 +1,132 @@
-import { UpdateCard } from '@/components/UpdateCard';
+import Link from 'next/link';
 import { fetchFromMongo } from '@/lib/mongoEdge';
 
 // Connect to DB and fetch live data
 async function getLatestUpdates() {
   try {
-    // Fetch latest 20 updates using MongoDB Data API
+    // Fetch latest 50 updates to populate all columns
     const data = await fetchFromMongo('find', {
       sort: { createdAt: -1 },
-      limit: 20
+      limit: 60
     });
     
     const updates = data?.documents || [];
-
-    // Map object IDs
     return updates.map((doc: any) => ({
       ...doc,
-      _id: doc._id, // Data API returns IDs as strings implicitly if parsed
+      _id: doc._id, 
     }));
   } catch (error) {
     console.error('Database connection failed:', error);
-    return []; // Fallback to empty array if DB isn't connected yet
+    return []; 
   }
 }
 
 export default async function HomePage() {
   const liveUpdates = await getLatestUpdates();
-  const featuredUpdate = liveUpdates.length > 0 ? liveUpdates[0] : null;
-  const gridUpdates = liveUpdates.length > 0 ? liveUpdates.slice(1) : [];
+
+  // Categorize updates in memory
+  const results = liveUpdates.filter((u: any) => u.category?.toLowerCase().includes('result'));
+  const admitCards = liveUpdates.filter((u: any) => u.category?.toLowerCase().includes('admit'));
+  const latestJobs = liveUpdates.filter((u: any) => {
+    const cat = u.category?.toLowerCase() || '';
+    return !cat.includes('result') && !cat.includes('admit');
+  });
 
   return (
-    <div className="min-h-screen bg-slate-50/50">
-      <div className="container mx-auto px-4 py-12 md:px-8">
-        
-        {/* Modern Hero Section */}
-        <section className="mb-16 flex flex-col items-center text-center">
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-semibold text-blue-700 shadow-sm">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-400 opacity-75"></span>
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-blue-500"></span>
-            </span>
-            Powered by Autonomous AI
-          </div>
-          <h1 className="mb-6 max-w-4xl text-4xl font-extrabold tracking-tight text-slate-900 md:text-6xl lg:leading-[1.1]">
-            Your Next Career Move, <br className="hidden md:block" />
-            <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Delivered Instantly.</span>
-          </h1>
-          <p className="max-w-2xl text-lg text-slate-600 md:text-xl">
-            Stay ahead of the curve with AI-curated, real-time updates for government jobs, admit cards, and examination results.
-          </p>
-        </section>
+    <div className="min-h-screen bg-white">
+      
+      {/* Ticker / Marquee Section (Optional but adds official vibe) */}
+      <div className="bg-slate-900 text-white overflow-hidden py-2 px-4 shadow-md flex">
+        <span className="font-bold whitespace-nowrap mr-4 bg-red-600 px-2 py-0.5 rounded text-xs animate-pulse">LATEST</span>
+        <div className="whitespace-nowrap overflow-hidden relative w-full">
+           <div className="inline-block animate-[marquee_20s_linear_infinite]">
+             {liveUpdates.slice(0, 5).map((u: any, i: number) => (
+               <span key={i} className="mx-6 text-sm">
+                 <Link href={`/update/${u._id}`} className="hover:text-blue-300 transition-colors">
+                   {u.title}
+                 </Link>
+               </span>
+             ))}
+           </div>
+        </div>
+      </div>
 
+      <div className="container mx-auto px-2 py-6 max-w-7xl">
+        
         {liveUpdates.length === 0 ? (
-          <div className="rounded-2xl border border-slate-200 bg-white p-12 text-center shadow-sm">
-            <p className="text-lg text-slate-500">No updates found. Please configure your MONGODB_URI and run the fetch API.</p>
+          <div className="rounded border border-slate-200 bg-slate-50 p-12 text-center shadow-sm mt-8">
+            <p className="text-lg text-slate-500 font-semibold">No updates found. Database might be empty.</p>
           </div>
         ) : (
-          <>
-            {/* Featured Post (Most Recent) */}
-            {featuredUpdate && (
-              <section className="mb-16">
-                <h2 className="mb-6 text-2xl font-bold tracking-tight text-slate-800">Featured Update</h2>
-                <div className="overflow-hidden rounded-3xl border border-slate-200/60 bg-white shadow-xl shadow-slate-200/40 lg:flex">
-                  <div className="flex flex-col justify-center bg-gradient-to-br from-blue-50 to-indigo-50 p-8 lg:w-2/5 lg:p-12">
-                    <span className="mb-4 inline-block w-fit rounded-full bg-blue-600 px-4 py-1.5 text-sm font-bold tracking-wide text-white shadow-md">
-                      {featuredUpdate.category}
-                    </span>
-                    <h3 className="mb-4 text-3xl font-bold leading-tight text-slate-900">
-                      {featuredUpdate.title}
-                    </h3>
-                    <p className="mb-8 text-slate-600 line-clamp-3">
-                      {featuredUpdate.eligibility !== 'Not Specified' 
-                        ? featuredUpdate.eligibility 
-                        : "Discover the complete details, important dates, and application process for this latest opportunity."}
-                    </p>
-                    <a 
-                      href={`/update/${featuredUpdate._id}`}
-                      className="inline-flex w-fit items-center gap-2 rounded-xl bg-slate-900 px-6 py-3 font-semibold text-white transition-all hover:bg-slate-800 hover:shadow-lg hover:-translate-y-0.5"
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            
+            {/* Column 1: Result */}
+            <div className="border border-red-700 rounded-lg overflow-hidden shadow-sm flex flex-col bg-white">
+              <div className="bg-red-700 text-white text-center py-2.5 font-bold text-xl uppercase tracking-wide border-b-4 border-red-900">
+                Result
+              </div>
+              <ul className="flex-1 divide-y divide-slate-200">
+                {results.length > 0 ? results.map((item: any) => (
+                  <li key={item._id} className="group">
+                    <Link 
+                      href={`/update/${item._id}`} 
+                      className="block py-2.5 px-4 text-[15px] font-semibold text-blue-700 hover:text-red-700 hover:bg-red-50 transition-colors leading-snug"
                     >
-                      Read Full Article
-                    </a>
-                  </div>
-                  <div className="relative hidden bg-slate-100 lg:block lg:w-3/5">
-                    {/* Placeholder for an image or abstract art. Since we don't have images in DB, we use a beautiful gradient abstract pattern */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-indigo-500 via-blue-500 to-cyan-400 opacity-90 mix-blend-multiply"></div>
-                    <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-30"></div>
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="rounded-2xl border border-white/20 bg-white/10 p-8 text-center backdrop-blur-md">
-                         <p className="text-4xl font-extrabold text-white shadow-black/10 drop-shadow-lg">Just Arrived</p>
-                         <p className="mt-2 text-lg text-white/90">AI Verified & Processed</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </section>
-            )}
+                      {item.title}
+                    </Link>
+                  </li>
+                )) : (
+                  <li className="py-4 px-4 text-center text-sm text-slate-500">No results available</li>
+                )}
+              </ul>
+            </div>
 
-            {/* Grid Layout (Rest of Updates) */}
-            {gridUpdates.length > 0 && (
-              <section>
-                <div className="mb-6 flex items-center justify-between">
-                  <h2 className="text-2xl font-bold tracking-tight text-slate-800">Recent Updates</h2>
-                </div>
-                <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-                  {gridUpdates.map((update: any) => (
-                    <UpdateCard
-                      key={update._id}
-                      title={update.title}
-                      category={update.category}
-                      lastDate={update.lastDate || 'Not Specified'}
-                      eligibility={update.eligibility || 'Refer to Notification'}
-                      link={`/update/${update._id}`}
-                    />
-                  ))}
-                </div>
-              </section>
-            )}
-          </>
+            {/* Column 2: Admit Card */}
+            <div className="border border-emerald-700 rounded-lg overflow-hidden shadow-sm flex flex-col bg-white">
+              <div className="bg-emerald-700 text-white text-center py-2.5 font-bold text-xl uppercase tracking-wide border-b-4 border-emerald-900">
+                Admit Card
+              </div>
+              <ul className="flex-1 divide-y divide-slate-200">
+                {admitCards.length > 0 ? admitCards.map((item: any) => (
+                  <li key={item._id} className="group">
+                    <Link 
+                      href={`/update/${item._id}`} 
+                      className="block py-2.5 px-4 text-[15px] font-semibold text-blue-700 hover:text-emerald-700 hover:bg-emerald-50 transition-colors leading-snug"
+                    >
+                      {item.title}
+                    </Link>
+                  </li>
+                )) : (
+                  <li className="py-4 px-4 text-center text-sm text-slate-500">No admit cards available</li>
+                )}
+              </ul>
+            </div>
+
+            {/* Column 3: Latest Jobs */}
+            <div className="border border-blue-800 rounded-lg overflow-hidden shadow-sm flex flex-col bg-white">
+              <div className="bg-blue-800 text-white text-center py-2.5 font-bold text-xl uppercase tracking-wide border-b-4 border-blue-950">
+                Latest Jobs
+              </div>
+              <ul className="flex-1 divide-y divide-slate-200">
+                {latestJobs.length > 0 ? latestJobs.map((item: any) => (
+                  <li key={item._id} className="group">
+                    <Link 
+                      href={`/update/${item._id}`} 
+                      className="block py-2.5 px-4 text-[15px] font-semibold text-blue-800 hover:text-blue-600 hover:bg-blue-50 transition-colors leading-snug"
+                    >
+                      {item.title}
+                    </Link>
+                  </li>
+                )) : (
+                  <li className="py-4 px-4 text-center text-sm text-slate-500">No latest jobs available</li>
+                )}
+              </ul>
+            </div>
+
+          </div>
         )}
       </div>
+
     </div>
   );
 }
