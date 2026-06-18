@@ -44,6 +44,23 @@ export async function fetchFromMongo(action: string, payload: any) {
     } else if (action === 'insertOne') {
       await collection.insertOne(payload.document);
       result = { insertedId: 'ok' };
+      
+    } else if (action === 'deleteOne') {
+      let filter = payload.filter;
+      if (filter._id && filter._id.$oid) {
+        filter._id = new ObjectId(filter._id.$oid);
+      }
+      const delRes = await collection.deleteOne(filter);
+      result = { deletedCount: delRes.deletedCount };
+
+    } else if (action === 'updateOne') {
+      let filter = payload.filter;
+      if (filter._id && filter._id.$oid) {
+        filter._id = new ObjectId(filter._id.$oid);
+      }
+      // Assuming payload.update uses $set or similar MongoDB update operators
+      const upRes = await collection.updateOne(filter, payload.update);
+      result = { modifiedCount: upRes.modifiedCount };
     }
 
     return result;
