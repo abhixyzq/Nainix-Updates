@@ -42,8 +42,8 @@ export async function fetchFromMongo(action: string, payload: any) {
       result = { document: doc };
 
     } else if (action === 'insertOne') {
-      await collection.insertOne(payload.document);
-      result = { insertedId: 'ok' };
+      const res = await collection.insertOne(payload.document);
+      result = { insertedId: res.insertedId.toString() };
       
     } else if (action === 'deleteOne') {
       let filter = payload.filter;

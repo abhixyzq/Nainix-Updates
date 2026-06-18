@@ -166,7 +166,7 @@ Raw HTML: ${detailText.slice(0, 50000)}`;
       const deepDetails = await callGemini(detailPrompt);
 
       if (deepDetails) {
-        await fetchFromMongo('insertOne', {
+        const insertRes = await fetchFromMongo('insertOne', {
           document: {
             title: deepDetails.title || item.title,
             category: item.category,
@@ -179,6 +179,16 @@ Raw HTML: ${detailText.slice(0, 50000)}`;
             createdAt: new Date().toISOString()
           }
         });
+        
+        // Send automatic Telegram notification
+        if (insertRes?.insertedId) {
+          import('@/lib/telegram').then(m => m.sendTelegramMessage(
+            deepDetails.title || item.title, 
+            item.category, 
+            insertRes.insertedId
+          )).catch(err => console.error("Failed to load Telegram module:", err));
+        }
+        
         newUpdatesAdded++;
       }
     }
