@@ -3,7 +3,27 @@ import * as cheerio from 'cheerio';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { fetchFromMongo } from '@/lib/mongoEdge';
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || 'mock-api-key-for-now');
+let apiKeys: string[] = [];
+let currentKeyIndex = 0;
+
+function getApiKeys() {
+  if (apiKeys.length === 0) {
+    const keysStr = process.env.GEMINI_API_KEYS || process.env.GEMINI_API_KEY || 'mock-api-key';
+    apiKeys = keysStr.split(',').map(k => k.trim()).filter(Boolean);
+  }
+  return apiKeys;
+}
+
+function getCurrentKey() {
+  const keys = getApiKeys();
+  return keys[currentKeyIndex] || null;
+}
+
+function getNextKey() {
+  const keys = getApiKeys();
+  currentKeyIndex = (currentKeyIndex + 1) % keys.length;
+  return keys[currentKeyIndex];
+}
 
 // Helper to fetch and clean HTML
 async function scrapeWebsite(url: string) {
@@ -25,32 +45,54 @@ async function scrapeWebsite(url: string) {
   }
 }
 
-// Helper to call Gemini with retry logic
+// Helper to call Gemini with key rotation and retry logic
 async function callGemini(prompt: string) {
-  const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
-  let retries = 3;
-  let delay = 2000;
+  const totalKeys = getApiKeys().length;
+  let keysTried = 0;
   
-  while (retries > 0) {
-    try {
-      const result = await model.generateContent(prompt);
-      let responseText = result.response.text();
-      responseText = responseText.replace(/```json/gi, '').replace(/```/g, '').trim();
-      return JSON.parse(responseText);
-    } catch (error: any) {
-      const isOverloaded = error.status === 503 || error.message?.includes('503');
-      if (isOverloaded && retries > 1) {
-        console.warn(`[Google AI 503] Retrying in ${delay}ms...`);
-        await new Promise(res => setTimeout(res, delay));
-        retries--;
-        delay *= 2;
-      } else {
-        console.error('AI Processing Error:', error);
-        throw new Error(`Gemini API Error: ${error.message || error}`);
+  while (keysTried < totalKeys) {
+    let keyRetries = 2;
+    let delay = 2000;
+    
+    while (keyRetries > 0) {
+      try {
+        const key = getCurrentKey();
+        if (!key) throw new Error('No API keys configured');
+        
+        const genAI = new GoogleGenerativeAI(key);
+        const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
+        
+        const result = await model.generateContent(prompt);
+        let responseText = result.response.text();
+        responseText = responseText.replace(/```json/gi, '').replace(/```/g, '').trim();
+        return JSON.parse(responseText);
+        
+      } catch (error: any) {
+        const isOverloaded = error.status === 503 || error.message?.includes('503');
+        const isRateLimited = error.status === 429 || error.message?.includes('429');
+        const isNetworkError = error.message?.includes('fetch failed') || error.message?.includes('ECONNRESET');
+        
+        if ((isOverloaded || isNetworkError) && keyRetries > 1) {
+          console.warn(`[Network/503 Error] Retrying in ${delay}ms...`);
+          await new Promise(res => setTimeout(res, delay));
+          keyRetries--;
+          delay *= 2;
+        } else if (isRateLimited) {
+          console.warn(`[Google AI 429] Key limit reached. Switching to next API key...`);
+          break; // break out of the retry loop to switch keys
+        } else {
+          console.error('AI Processing Error:', error);
+          throw new Error(`Gemini API Error: ${error.message || error}`);
+        }
       }
     }
+    
+    // Switch to the next API key in the list
+    getNextKey();
+    keysTried++;
   }
-  throw new Error('Gemini API exhausted retries');
+  
+  throw new Error(`All ${totalKeys} Gemini API keys have exhausted their quotas or rate limits.`);
 }
 
 export async function GET(request: Request) {
