@@ -46,11 +46,11 @@ async function callGemini(prompt: string) {
         delay *= 2;
       } else {
         console.error('AI Processing Error:', error);
-        return null;
+        throw new Error(`Gemini API Error: ${error.message || error}`);
       }
     }
   }
-  return null;
+  throw new Error('Gemini API exhausted retries');
 }
 
 export async function GET(request: Request) {
