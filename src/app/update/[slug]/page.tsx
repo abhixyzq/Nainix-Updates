@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import Link from 'next/link';
 import { ArrowLeft, ExternalLink, Download, CalendarDays, Wallet, BookOpen, Users, Globe } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
