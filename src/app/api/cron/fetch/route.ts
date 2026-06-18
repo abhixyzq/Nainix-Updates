@@ -99,9 +99,15 @@ export async function GET(request: Request) {
   try {
     // SECURITY CHECK
     const authHeader = request.headers.get('authorization');
+    
+    // Check if user is an admin via cookies
+    const cookieHeader = request.headers.get('cookie') || '';
+    const isAdmin = cookieHeader.includes('admin_token=authenticated');
+
     if (
       process.env.NODE_ENV === 'production' &&
-      authHeader !== `Bearer ${process.env.CRON_SECRET}`
+      authHeader !== `Bearer ${process.env.CRON_SECRET}` &&
+      !isAdmin
     ) {
       return NextResponse.json({ error: 'Unauthorized: Invalid Cron Secret' }, { status: 401 });
     }
