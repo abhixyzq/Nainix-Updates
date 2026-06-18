@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import { ArrowLeft, ExternalLink, Download, CalendarDays, Wallet, BookOpen, Users, Globe } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { fetchFromMongo } from '@/lib/mongoEdge';
 
 // Fetch specific update by ID from MongoDB
@@ -67,65 +69,77 @@ export default async function UpdateDetailsPage(
         {/* Left Column (Main Details) */}
         <div className="col-span-1 space-y-8 lg:col-span-2">
           
-          {/* Important Dates Grid */}
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-              <h3 className="mb-4 flex items-center gap-2 text-lg font-bold text-slate-900">
-                <CalendarDays className="h-5 w-5 text-blue-600" />
-                Important Dates
-              </h3>
-              <div className="space-y-3 text-sm text-slate-700">
-                <div className="flex flex-col gap-1 border-b border-slate-100 pb-2">
-                  <span className="font-medium text-slate-600">Last Date to Apply:</span>
-                  <span className="font-semibold text-red-600">{update.lastDate || 'Not Specified'}</span>
-                </div>
-                {update.importantDates && update.importantDates !== 'Not Specified' && (
-                  <div className="pt-2 text-slate-600">
-                    <p className="whitespace-pre-line">{update.importantDates}</p>
+          {update.content && update.content !== 'Content could not be generated.' ? (
+            <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm lg:p-8">
+              <article className="prose prose-slate prose-blue max-w-none prose-headings:font-bold prose-a:text-blue-600 hover:prose-a:text-blue-800">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  {update.content}
+                </ReactMarkdown>
+              </article>
+            </div>
+          ) : (
+            <>
+              {/* Important Dates Grid */}
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+                  <h3 className="mb-4 flex items-center gap-2 text-lg font-bold text-slate-900">
+                    <CalendarDays className="h-5 w-5 text-blue-600" />
+                    Important Dates
+                  </h3>
+                  <div className="space-y-3 text-sm text-slate-700">
+                    <div className="flex flex-col gap-1 border-b border-slate-100 pb-2">
+                      <span className="font-medium text-slate-600">Last Date to Apply:</span>
+                      <span className="font-semibold text-red-600">{update.lastDate || 'Not Specified'}</span>
+                    </div>
+                    {update.importantDates && update.importantDates !== 'Not Specified' && (
+                      <div className="pt-2 text-slate-600">
+                        <p className="whitespace-pre-line">{update.importantDates}</p>
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
-            </div>
+                </div>
 
-            {/* Application Fee Card */}
-            <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-              <h3 className="mb-4 flex items-center gap-2 text-lg font-bold text-slate-900">
-                <Wallet className="h-5 w-5 text-green-600" />
-                Application Fee
-              </h3>
-              <div className="text-sm text-slate-700">
-                {update.applicationFee && update.applicationFee !== 'Not Specified' ? (
-                  <p className="whitespace-pre-line">{update.applicationFee}</p>
-                ) : (
-                  <p className="italic text-slate-500">Fee details not provided.</p>
-                )}
+                {/* Application Fee Card */}
+                <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+                  <h3 className="mb-4 flex items-center gap-2 text-lg font-bold text-slate-900">
+                    <Wallet className="h-5 w-5 text-green-600" />
+                    Application Fee
+                  </h3>
+                  <div className="text-sm text-slate-700">
+                    {update.applicationFee && update.applicationFee !== 'Not Specified' ? (
+                      <p className="whitespace-pre-line">{update.applicationFee}</p>
+                    ) : (
+                      <p className="italic text-slate-500">Fee details not provided.</p>
+                    )}
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
 
-          {/* Vacancy Details */}
-          {(update.vacancyDetails && update.vacancyDetails !== 'Not Specified') && (
-            <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-              <h3 className="mb-4 flex items-center gap-2 text-xl font-bold text-slate-900">
-                <Users className="h-6 w-6 text-indigo-600" />
-                Vacancy Details
-              </h3>
-              <p className="whitespace-pre-line leading-relaxed text-slate-700">
-                {update.vacancyDetails}
-              </p>
-            </div>
+              {/* Vacancy Details */}
+              {(update.vacancyDetails && update.vacancyDetails !== 'Not Specified') && (
+                <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+                  <h3 className="mb-4 flex items-center gap-2 text-xl font-bold text-slate-900">
+                    <Users className="h-6 w-6 text-indigo-600" />
+                    Vacancy Details
+                  </h3>
+                  <p className="whitespace-pre-line leading-relaxed text-slate-700">
+                    {update.vacancyDetails}
+                  </p>
+                </div>
+              )}
+
+              {/* Eligibility Section */}
+              <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+                <h3 className="mb-4 flex items-center gap-2 text-xl font-bold text-slate-900">
+                  <BookOpen className="h-6 w-6 text-amber-600" />
+                  Eligibility Details
+                </h3>
+                <p className="whitespace-pre-line leading-relaxed text-slate-700">
+                  {update.eligibility || 'Please refer to the official notification for complete eligibility details.'}
+                </p>
+              </div>
+            </>
           )}
-
-          {/* Eligibility Section */}
-          <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h3 className="mb-4 flex items-center gap-2 text-xl font-bold text-slate-900">
-              <BookOpen className="h-6 w-6 text-amber-600" />
-              Eligibility Details
-            </h3>
-            <p className="whitespace-pre-line leading-relaxed text-slate-700">
-              {update.eligibility || 'Please refer to the official notification for complete eligibility details.'}
-            </p>
-          </div>
           
         </div>
 
