@@ -20,13 +20,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Google AdSense Verification Script */}
-        <Script
+        {/* Google AdSense Verification Script (Raw HTML for Crawler) */}
+        <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6966911553012275"
           crossOrigin="anonymous"
-          strategy="afterInteractive"
-        />
+        ></script>
       </head>
       <body className={`${inter.className} flex min-h-screen flex-col bg-neu-light text-neu-text-heading antialiased transition-colors duration-300`}>
         <ConditionalNavbar />
