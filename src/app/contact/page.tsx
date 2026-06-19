@@ -27,7 +27,7 @@ export default function ContactPage() {
             </div>
             <div>
               <h3 className="text-lg font-bold text-neu-text-heading mb-1">Email Us</h3>
-              <p className="text-neu-text font-medium">contact@nainixupdates.com</p>
+              <p className="text-neu-text font-medium">hello@nainix.me</p>
               <p className="text-neu-text/70 text-sm mt-1">We aim to reply within 24 hours.</p>
             </div>
           </div>

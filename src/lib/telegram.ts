@@ -1,7 +1,7 @@
 export async function sendTelegramMessage(title: string, category: string, postId: string) {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://update.nainix.me';
 
   if (!token || !chatId || token === 'your_bot_token_here') {
     console.warn('Telegram token or chat ID is missing. Skipping Telegram broadcast.');

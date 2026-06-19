@@ -39,7 +39,7 @@ export default function PrivacyPolicyPage() {
           <section className="shadow-neu-pressed rounded-2xl p-6 md:p-8 bg-neu-accent/5">
             <h2 className="text-2xl font-bold text-neu-text-heading mb-4">Google DoubleClick DART Cookie</h2>
             <p>
-              Google is one of a third-party vendor on our site. It also uses cookies, known as DART cookies, to serve ads to our site visitors based upon their visit to www.website.com and other sites on the internet. However, visitors may choose to decline the use of DART cookies by visiting the Google ad and content network Privacy Policy at the following URL – <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener noreferrer" className="text-neu-accent font-bold hover:underline">https://policies.google.com/technologies/ads</a>
+              Google is one of a third-party vendor on our site. It also uses cookies, known as DART cookies, to serve ads to our site visitors based upon their visit to update.nainix.me and other sites on the internet. However, visitors may choose to decline the use of DART cookies by visiting the Google ad and content network Privacy Policy at the following URL – <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener noreferrer" className="text-neu-accent font-bold hover:underline">https://policies.google.com/technologies/ads</a>
             </p>
           </section>
 
