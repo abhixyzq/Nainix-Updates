@@ -11,6 +11,20 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  
+  /* Neumorphic Light Theme */
+  --color-neu-light: #e6e9ef;
+  --color-neu-accent: #6d5dfc;
+  --color-neu-text: #5e6687;
+  --color-neu-text-heading: #2d3142;
+  
+  /* Drop Shadows for Neumorphism */
+  --shadow-neu-flat: 8px 8px 16px #c4c6cc, -8px -8px 16px #ffffff;
+  --shadow-neu-flat-sm: 4px 4px 8px #c4c6cc, -4px -4px 8px #ffffff;
+  
+  /* Inset Shadows for Neumorphism */
+  --shadow-neu-pressed: inset 6px 6px 10px #c4c6cc, inset -6px -6px 10px #ffffff;
+  --shadow-neu-pressed-sm: inset 3px 3px 6px #c4c6cc, inset -3px -3px 6px #ffffff;
 }
 
 @media (prefers-color-scheme: dark) {
