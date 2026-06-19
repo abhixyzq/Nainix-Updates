@@ -79,78 +79,93 @@ export default async function HomePage() {
             <p className="text-neu-text">The database might be empty right now.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             
             {/* Column 1: Result */}
-            <div className="rounded-3xl shadow-neu-flat p-6 flex flex-col">
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="font-bold text-xl text-neu-text-heading tracking-wide">Results</h3>
-                <div className="w-10 h-10 shadow-neu-pressed rounded-full flex items-center justify-center text-green-500">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <div className="rounded-2xl shadow-neu-flat p-4 md:p-5 flex flex-col bg-[#e6e9ef]">
+              <div className="flex items-center gap-3 mb-4 pb-3 border-b border-neu-text/10">
+                <div className="w-8 h-8 shadow-neu-pressed rounded-full flex items-center justify-center text-green-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                 </div>
+                <h3 className="font-extrabold text-lg text-neu-text-heading uppercase tracking-wide">Results</h3>
               </div>
-              <ul className="flex-1 space-y-4">
+              <ul className="flex-1 space-y-1">
                 {results.length > 0 ? results.map((item: any) => (
                   <li key={item._id}>
                     <Link 
                       href={`/update/${item._id}`} 
-                      className="block p-4 rounded-2xl shadow-neu-flat-sm hover:shadow-neu-pressed transition-shadow text-[14px] font-semibold text-neu-text hover:text-neu-accent leading-snug"
+                      className="block py-2.5 px-3 rounded-lg hover:shadow-neu-pressed transition-all text-[13px] md:text-sm font-semibold text-neu-text-heading/90 hover:text-blue-600 leading-snug border-b border-transparent hover:border-neu-text/5"
                     >
-                      {item.title}
+                      • {item.title}
                     </Link>
                   </li>
                 )) : (
-                  <li className="p-4 shadow-neu-pressed rounded-2xl text-center text-sm text-neu-text">No results available</li>
+                  <li className="py-4 text-center text-sm font-medium text-neu-text">No results available</li>
                 )}
               </ul>
+              {results.length > 0 && (
+                <Link href="/results" className="mt-4 text-center text-xs font-bold uppercase text-blue-600 hover:text-blue-800 transition-colors py-2">
+                  View All Results
+                </Link>
+              )}
             </div>
 
             {/* Column 2: Admit Card */}
-            <div className="rounded-3xl shadow-neu-flat p-6 flex flex-col">
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="font-bold text-xl text-neu-text-heading tracking-wide">Admit Cards</h3>
-                <div className="w-10 h-10 shadow-neu-pressed rounded-full flex items-center justify-center text-orange-500">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            <div className="rounded-2xl shadow-neu-flat p-4 md:p-5 flex flex-col bg-[#e6e9ef]">
+              <div className="flex items-center gap-3 mb-4 pb-3 border-b border-neu-text/10">
+                <div className="w-8 h-8 shadow-neu-pressed rounded-full flex items-center justify-center text-orange-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
                 </div>
+                <h3 className="font-extrabold text-lg text-neu-text-heading uppercase tracking-wide">Admit Cards</h3>
               </div>
-              <ul className="flex-1 space-y-4">
+              <ul className="flex-1 space-y-1">
                 {admitCards.length > 0 ? admitCards.map((item: any) => (
                   <li key={item._id}>
                     <Link 
                       href={`/update/${item._id}`} 
-                      className="block p-4 rounded-2xl shadow-neu-flat-sm hover:shadow-neu-pressed transition-shadow text-[14px] font-semibold text-neu-text hover:text-neu-accent leading-snug"
+                      className="block py-2.5 px-3 rounded-lg hover:shadow-neu-pressed transition-all text-[13px] md:text-sm font-semibold text-neu-text-heading/90 hover:text-blue-600 leading-snug border-b border-transparent hover:border-neu-text/5"
                     >
-                      {item.title}
+                      • {item.title}
                     </Link>
                   </li>
                 )) : (
-                  <li className="p-4 shadow-neu-pressed rounded-2xl text-center text-sm text-neu-text">No admit cards available</li>
+                  <li className="py-4 text-center text-sm font-medium text-neu-text">No admit cards available</li>
                 )}
               </ul>
+              {admitCards.length > 0 && (
+                <Link href="/admit-cards" className="mt-4 text-center text-xs font-bold uppercase text-blue-600 hover:text-blue-800 transition-colors py-2">
+                  View All Admit Cards
+                </Link>
+              )}
             </div>
 
             {/* Column 3: Latest Jobs */}
-            <div className="rounded-3xl shadow-neu-flat p-6 flex flex-col">
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="font-bold text-xl text-neu-text-heading tracking-wide">Latest Jobs</h3>
-                <div className="w-10 h-10 shadow-neu-pressed rounded-full flex items-center justify-center text-blue-500">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+            <div className="rounded-2xl shadow-neu-flat p-4 md:p-5 flex flex-col bg-[#e6e9ef]">
+              <div className="flex items-center gap-3 mb-4 pb-3 border-b border-neu-text/10">
+                <div className="w-8 h-8 shadow-neu-pressed rounded-full flex items-center justify-center text-blue-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
                 </div>
+                <h3 className="font-extrabold text-lg text-neu-text-heading uppercase tracking-wide">Latest Jobs</h3>
               </div>
-              <ul className="flex-1 space-y-4">
+              <ul className="flex-1 space-y-1">
                 {latestJobs.length > 0 ? latestJobs.map((item: any) => (
                   <li key={item._id}>
                     <Link 
                       href={`/update/${item._id}`} 
-                      className="block p-4 rounded-2xl shadow-neu-flat-sm hover:shadow-neu-pressed transition-shadow text-[14px] font-semibold text-neu-text hover:text-neu-accent leading-snug"
+                      className="block py-2.5 px-3 rounded-lg hover:shadow-neu-pressed transition-all text-[13px] md:text-sm font-semibold text-neu-text-heading/90 hover:text-blue-600 leading-snug border-b border-transparent hover:border-neu-text/5"
                     >
-                      {item.title}
+                      • {item.title}
                     </Link>
                   </li>
                 )) : (
-                  <li className="p-4 shadow-neu-pressed rounded-2xl text-center text-sm text-neu-text">No latest jobs available</li>
+                  <li className="py-4 text-center text-sm font-medium text-neu-text">No latest jobs available</li>
                 )}
               </ul>
+              {latestJobs.length > 0 && (
+                <Link href="/latest-jobs" className="mt-4 text-center text-xs font-bold uppercase text-blue-600 hover:text-blue-800 transition-colors py-2">
+                  View All Latest Jobs
+                </Link>
+              )}
             </div>
 
           </div>

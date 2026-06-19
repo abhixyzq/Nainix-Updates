@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Search, GraduationCap, Menu, X, Bell, Briefcase, FileCheck, Send } from 'lucide-react';
+import { NainixLogo } from '@/components/NainixLogo';
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,14 +16,10 @@ export function Navbar() {
         {/* Left Side: Logo */}
         <Link href="/" className="flex items-center gap-3 group">
           <div className="relative flex h-12 w-12 items-center justify-center rounded-full shadow-neu-flat text-neu-accent font-bold transition-all duration-300 group-hover:shadow-neu-pressed">
-            <GraduationCap className="h-6 w-6 transition-transform duration-300 group-hover:rotate-6" />
-            <span className="absolute -top-1 -right-1 flex h-3 w-3">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500 shadow-neu-flat-sm"></span>
-            </span>
+            <NainixLogo className="h-6 w-6 transition-transform duration-300 group-hover:rotate-[6deg]" />
           </div>
-          <span className="text-xl font-extrabold tracking-tight text-neu-text-heading">
-            Nainix<span className="text-neu-accent font-medium">Updates</span>
+          <span className="text-2xl font-bold tracking-wide text-neu-text-heading">
+            Nainix<span className="text-blue-600"> Updates</span>
           </span>
         </Link>
 

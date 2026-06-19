@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Send, Globe, MessageCircle, Share2, GraduationCap } from 'lucide-react';
+import { NainixLogo } from '@/components/NainixLogo';
 
 export function Footer() {
   return (
@@ -14,10 +15,10 @@ export function Footer() {
           <div className="md:col-span-5">
             <div className="flex items-center gap-3 mb-6">
               <div className="relative flex h-12 w-12 items-center justify-center rounded-full shadow-[5px_5px_10px_#0e1017,-5px_-5px_10px_#1c222f] text-blue-400 font-bold border border-white/5">
-                <GraduationCap className="h-6 w-6" />
+                <NainixLogo className="h-6 w-6" />
               </div>
-              <span className="text-2xl font-extrabold tracking-tight text-white">
-                Nainix<span className="text-blue-500 font-medium">Updates</span>
+              <span className="text-2xl font-bold tracking-wide text-white">
+                Nainix<span className="text-blue-500"> Updates</span>
               </span>
             </div>
             
