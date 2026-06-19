@@ -83,15 +83,27 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/contact" className="hover:text-blue-400 transition-colors flex items-center gap-2 group">
+                  <span className="w-0 group-hover:w-2 h-[2px] bg-blue-400 transition-all duration-300"></span>
+                  Contact Us
+                </Link>
+              </li>
+              <li>
                 <Link href="/privacy" className="hover:text-blue-400 transition-colors flex items-center gap-2 group">
                   <span className="w-0 group-hover:w-2 h-[2px] bg-blue-400 transition-all duration-300"></span>
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="hover:text-blue-400 transition-colors flex items-center gap-2 group">
+                <Link href="/disclaimer" className="hover:text-blue-400 transition-colors flex items-center gap-2 group">
                   <span className="w-0 group-hover:w-2 h-[2px] bg-blue-400 transition-all duration-300"></span>
-                  Contact Us
+                  Disclaimer
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms" className="hover:text-blue-400 transition-colors flex items-center gap-2 group">
+                  <span className="w-0 group-hover:w-2 h-[2px] bg-blue-400 transition-all duration-300"></span>
+                  Terms & Conditions
                 </Link>
               </li>
             </ul>
