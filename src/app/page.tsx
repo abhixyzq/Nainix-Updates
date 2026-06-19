@@ -41,7 +41,7 @@ export default async function HomePage() {
       <div className="bg-slate-900 text-white overflow-hidden py-2 px-4 shadow-md flex">
         <span className="font-bold whitespace-nowrap mr-4 bg-red-600 px-2 py-0.5 rounded text-xs animate-pulse">LATEST</span>
         <div className="whitespace-nowrap overflow-hidden relative w-full">
-           <div className="inline-block animate-[marquee_20s_linear_infinite]">
+           <div className="inline-block animate-[marquee_50s_linear_infinite]">
              {liveUpdates.slice(0, 5).map((u: any, i: number) => (
                <span key={i} className="mx-6 text-sm">
                  <Link href={`/update/${u._id}`} className="hover:text-blue-300 transition-colors">
