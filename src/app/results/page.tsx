@@ -20,6 +20,14 @@ async function getResults() {
 export const metadata = {
   title: 'Exam Results | Nainix Updates',
   description: 'Check the latest government exam results, cut-offs, and merit lists on Nainix Updates.',
+  alternates: {
+    canonical: '/results',
+  },
+  openGraph: {
+    title: 'Exam Results | Nainix Updates',
+    description: 'Check the latest government exam results, cut-offs, and merit lists on Nainix Updates.',
+    url: '/results',
+  },
 };
 
 export default async function ResultsPage() {

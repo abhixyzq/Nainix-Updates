@@ -20,6 +20,14 @@ async function getJobs() {
 export const metadata = {
   title: 'Latest Government Jobs | Nainix Updates',
   description: 'Find all the latest government jobs, private jobs, and recruitment updates on Nainix Updates.',
+  alternates: {
+    canonical: '/latest-jobs',
+  },
+  openGraph: {
+    title: 'Latest Government Jobs | Nainix Updates',
+    description: 'Find all the latest government jobs, private jobs, and recruitment updates on Nainix Updates.',
+    url: '/latest-jobs',
+  },
 };
 
 export default async function LatestJobsPage() {

@@ -7,6 +7,8 @@ import remarkGfm from 'remark-gfm';
 import { fetchFromMongo } from '@/lib/mongoEdge';
 import { AdBanner } from '@/components/AdBanner';
 
+import { Metadata } from 'next';
+
 // Fetch specific update by ID from MongoDB
 async function getUpdateDetails(id: string) {
   try {
@@ -17,6 +19,42 @@ async function getUpdateDetails(id: string) {
   } catch (error) {
     return null;
   }
+}
+
+// Dynamically generate SEO Metadata for each post
+export async function generateMetadata(
+  props: { params: Promise<{ slug: string }> }
+): Promise<Metadata> {
+  const params = await props.params;
+  const update: any = await getUpdateDetails(params.slug);
+  
+  if (!update) return { title: 'Update Not Found' };
+
+  // Fallback description based on eligibility or title
+  const desc = update.content && update.content !== 'Content could not be generated.' 
+    ? update.content.substring(0, 160).replace(/\n/g, ' ') 
+    : `Check out the latest updates for ${update.title} including important dates, eligibility, and direct links.`;
+
+  return {
+    title: update.title,
+    description: desc,
+    alternates: {
+      canonical: `/update/${update._id}`,
+    },
+    openGraph: {
+      title: update.title,
+      description: desc,
+      url: `/update/${update._id}`,
+      type: 'article',
+      publishedTime: update.createdAt ? new Date(update.createdAt).toISOString() : undefined,
+      modifiedTime: update.updatedAt ? new Date(update.updatedAt).toISOString() : undefined,
+    },
+    twitter: {
+      card: 'summary',
+      title: update.title,
+      description: desc,
+    }
+  };
 }
 
 export default async function UpdateDetailsPage(
@@ -44,9 +82,49 @@ export default async function UpdateDetailsPage(
     );
   }
 
+  // Generate JSON-LD Schema
+  const isJob = update.category?.toLowerCase().includes('job') || update.category?.toLowerCase().includes('recruitment');
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': isJob ? 'JobPosting' : 'Article',
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `https://update.nainix.me/update/${update._id}`
+    },
+    headline: update.title,
+    datePublished: update.createdAt ? new Date(update.createdAt).toISOString() : undefined,
+    dateModified: update.updatedAt ? new Date(update.updatedAt).toISOString() : update.createdAt ? new Date(update.createdAt).toISOString() : undefined,
+    author: {
+      '@type': 'Organization',
+      name: 'Nainix Updates',
+      url: 'https://update.nainix.me'
+    },
+    description: update.content ? update.content.substring(0, 200).replace(/\n/g, ' ') : update.title,
+    ...(isJob && {
+      hiringOrganization: {
+        '@type': 'Organization',
+        name: 'Government/Official Recruiter',
+      },
+      jobLocation: {
+        '@type': 'Place',
+        address: {
+          '@type': 'PostalAddress',
+          addressCountry: 'IN'
+        }
+      },
+      employmentType: 'FULL_TIME',
+      validThrough: update.lastDate ? new Date(update.lastDate).toISOString() : undefined,
+    })
+  };
+
   return (
-    <div className="container mx-auto px-4 py-8 md:px-8 max-w-7xl">
-      {/* Breadcrumbs / Back Link */}
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className="container mx-auto px-4 py-8 md:px-8 max-w-7xl">
+        {/* Breadcrumbs / Back Link */}
       <div className="mb-8">
         <Link 
           href="/" 
@@ -224,5 +302,6 @@ export default async function UpdateDetailsPage(
 
       </div>
     </div>
+    </>
   );
 }

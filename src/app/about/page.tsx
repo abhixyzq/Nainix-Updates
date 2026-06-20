@@ -1,8 +1,18 @@
 import { BookOpen, Target, Users } from 'lucide-react';
 
-export const metadata = {
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
   title: 'About Us | Nainix Updates',
   description: 'Learn more about Nainix Updates, your trusted portal for the latest government jobs, admit cards, and exam results.',
+  alternates: {
+    canonical: '/about',
+  },
+  openGraph: {
+    title: 'About Us | Nainix Updates',
+    description: 'Learn more about Nainix Updates, your trusted portal for the latest government jobs, admit cards, and exam results.',
+    url: '/about',
+  },
 };
 
 export default function AboutPage() {

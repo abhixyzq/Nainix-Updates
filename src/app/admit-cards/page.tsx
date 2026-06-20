@@ -20,6 +20,14 @@ async function getAdmitCards() {
 export const metadata = {
   title: 'Admit Cards | Nainix Updates',
   description: 'Download the latest admit cards and hall tickets for government exams on Nainix Updates.',
+  alternates: {
+    canonical: '/admit-cards',
+  },
+  openGraph: {
+    title: 'Admit Cards | Nainix Updates',
+    description: 'Download the latest admit cards and hall tickets for government exams on Nainix Updates.',
+    url: '/admit-cards',
+  },
 };
 
 export default async function AdmitCardsPage() {
