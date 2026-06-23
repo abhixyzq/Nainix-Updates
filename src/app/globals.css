@@ -2,8 +2,8 @@
 @plugin "@tailwindcss/typography";
 
 :root {
-  --background: #e6e9ef;
-  --foreground: #2d3142;
+  --background: #f8f9fa; /* Official subtle off-white */
+  --foreground: #0f172a; /* Slate 900 */
 }
 
 @theme inline {
@@ -12,25 +12,13 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   
-  /* Neumorphic Light Theme */
-  --color-neu-light: #e6e9ef;
-  --color-neu-accent: #6d5dfc;
-  --color-neu-text: #5e6687;
-  --color-neu-text-heading: #2d3142;
-  
-  /* Drop Shadows for Neumorphism */
-  --shadow-neu-flat: 8px 8px 16px #c4c6cc, -8px -8px 16px #ffffff;
-  --shadow-neu-flat-sm: 4px 4px 8px #c4c6cc, -4px -4px 8px #ffffff;
-  
-  /* Inset Shadows for Neumorphism */
-  --shadow-neu-pressed: inset 6px 6px 10px #c4c6cc, inset -6px -6px 10px #ffffff;
-  --shadow-neu-pressed-sm: inset 3px 3px 6px #c4c6cc, inset -3px -3px 6px #ffffff;
+  /* We have replaced the custom variables in components with tailwind slate/blue. */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #0f172a; /* Slate 900 */
+    --foreground: #f8fafc; /* Slate 50 */
   }
 }
 
@@ -41,6 +29,6 @@ body {
 }
 
 @keyframes marquee {
-  0% { transform: translateX(100%); }
-  100% { transform: translateX(-100%); }
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
 }

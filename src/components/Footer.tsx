@@ -1,145 +1,126 @@
 import Link from 'next/link';
-import { Send, Globe, MessageCircle, Share2, GraduationCap } from 'lucide-react';
+import { Send, Globe, MessageCircle, Share2, ArrowRight } from 'lucide-react';
 import { NainixLogo } from '@/components/NainixLogo';
 
 export function Footer() {
   return (
-    <footer className="bg-[#151923] border-t border-white/5 mt-12 relative overflow-hidden rounded-t-[3rem]">
-      {/* Decorative gradient blur in background */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-64 bg-blue-600/10 blur-[100px] pointer-events-none rounded-full" />
-      
-      <div className="container mx-auto px-4 py-16 md:px-8 relative z-10">
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-12">
+    <footer className="bg-slate-950 text-slate-400 mt-12 border-t border-slate-800">
+      <div className="container mx-auto px-4 py-16 md:px-8">
+        
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-8">
           
-          {/* Brand & Newsletter (Takes up 5 columns on desktop) */}
-          <div className="md:col-span-5">
+          {/* Brand & Newsletter (Takes up 4 columns on large screens) */}
+          <div className="md:col-span-12 lg:col-span-4">
             <div className="flex items-center gap-3 mb-6">
-              <div className="relative flex h-12 w-12 items-center justify-center rounded-full shadow-[5px_5px_10px_#0e1017,-5px_-5px_10px_#1c222f] text-blue-400 font-bold border border-white/5">
-                <NainixLogo className="h-6 w-6" />
+              <div className="relative flex h-10 w-10 items-center justify-center rounded-sm bg-blue-600 text-white font-bold">
+                <NainixLogo className="h-6 w-6 fill-current" />
               </div>
-              <span className="text-2xl font-bold tracking-wide text-white">
-                Nainix<span className="text-blue-500"> Updates</span>
+              <span className="text-2xl font-extrabold tracking-tight text-white uppercase">
+                Nainix<span className="text-blue-500">Updates</span>
               </span>
             </div>
             
-            <p className="text-sm leading-relaxed text-slate-400 mb-8 max-w-sm">
-              The official, premium, and trusted portal for Indian students and job seekers. Find the latest education updates, admit cards, government jobs, and exam results.
+            <p className="text-[15px] leading-relaxed mb-8 max-w-md">
+              The premium destination for Indian students and job seekers. Get the fastest, most reliable updates on government jobs, admit cards, and exam results.
             </p>
 
-            {/* Dark Neumorphic Newsletter Input */}
+            {/* Modern Newsletter Input */}
             <div className="flex flex-col gap-3 max-w-sm">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-300 ml-2">Subscribe to Alerts</span>
-              <div className="relative flex items-center">
+              <span className="text-xs font-bold uppercase tracking-widest text-slate-500">Stay Updated</span>
+              <div className="relative flex items-center group">
                 <input 
                   type="email" 
-                  placeholder="Enter your email" 
-                  className="w-full h-12 pl-5 pr-14 rounded-full bg-[#151923] shadow-[inset_4px_4px_8px_#0e1017,inset_-4px_-4px_8px_#1c222f] text-sm text-white focus:outline-none placeholder:text-slate-500 border border-transparent focus:border-blue-500/30 transition-colors"
+                  placeholder="Enter your email address" 
+                  className="w-full h-12 pl-4 pr-12 rounded-sm bg-slate-900 border border-slate-800 text-sm text-white focus:outline-none placeholder:text-slate-600 focus:border-blue-500 transition-all focus:ring-1 focus:ring-blue-500"
                 />
-                <button className="absolute right-1 top-1 h-10 w-10 flex items-center justify-center rounded-full bg-[#151923] shadow-[4px_4px_8px_#0e1017,-4px_-4px_8px_#1c222f] text-blue-400 hover:shadow-[inset_2px_2px_5px_#0e1017,inset_-2px_-2px_5px_#1c222f] transition-all active:scale-95 border border-white/5">
-                  <Send className="h-4 w-4 ml-0.5" />
+                <button className="absolute right-1 top-1 h-10 w-10 flex items-center justify-center rounded-sm bg-blue-600 text-white hover:bg-blue-500 transition-colors">
+                  <ArrowRight className="h-4 w-4" />
                 </button>
               </div>
             </div>
           </div>
 
           {/* Quick Links */}
-          <div className="md:col-span-2 md:col-start-7">
-            <h4 className="mb-6 text-sm font-bold uppercase tracking-wider text-slate-200 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.8)]"></span>
+          <div className="md:col-span-4 lg:col-span-2 lg:col-start-6">
+            <h4 className="mb-6 text-sm font-bold uppercase tracking-wider text-white">
               Explore
             </h4>
-            <ul className="space-y-4 text-[15px] font-medium text-slate-400">
+            <ul className="space-y-4 text-[15px] font-medium">
               <li>
-                <Link href="/latest-jobs" className="hover:text-blue-400 transition-colors flex items-center gap-2 group">
-                  <span className="w-0 group-hover:w-2 h-[2px] bg-blue-400 transition-all duration-300"></span>
-                  Govt Jobs
-                </Link>
+                <Link href="/latest-jobs" className="hover:text-blue-400 transition-colors">Govt Jobs</Link>
               </li>
               <li>
-                <Link href="/admit-cards" className="hover:text-blue-400 transition-colors flex items-center gap-2 group">
-                  <span className="w-0 group-hover:w-2 h-[2px] bg-blue-400 transition-all duration-300"></span>
-                  Admit Cards
-                </Link>
+                <Link href="/admit-cards" className="hover:text-blue-400 transition-colors">Admit Cards</Link>
               </li>
               <li>
-                <Link href="/results" className="hover:text-blue-400 transition-colors flex items-center gap-2 group">
-                  <span className="w-0 group-hover:w-2 h-[2px] bg-blue-400 transition-all duration-300"></span>
-                  Results
-                </Link>
+                <Link href="/results" className="hover:text-blue-400 transition-colors">Results</Link>
+              </li>
+              <li>
+                <Link href="/blog" className="hover:text-blue-400 transition-colors">Blog & Guides</Link>
               </li>
             </ul>
           </div>
 
-          {/* Legal & Support */}
-          <div className="md:col-span-2">
-            <h4 className="mb-6 text-sm font-bold uppercase tracking-wider text-slate-200 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.8)]"></span>
+          {/* Legal */}
+          <div className="md:col-span-4 lg:col-span-2">
+            <h4 className="mb-6 text-sm font-bold uppercase tracking-wider text-white">
               Legal
             </h4>
-            <ul className="space-y-4 text-[15px] font-medium text-slate-400">
+            <ul className="space-y-4 text-[15px] font-medium">
               <li>
-                <Link href="/about" className="hover:text-blue-400 transition-colors flex items-center gap-2 group">
-                  <span className="w-0 group-hover:w-2 h-[2px] bg-blue-400 transition-all duration-300"></span>
-                  About Us
-                </Link>
+                <Link href="/about" className="hover:text-blue-400 transition-colors">About Us</Link>
               </li>
               <li>
-                <Link href="/contact" className="hover:text-blue-400 transition-colors flex items-center gap-2 group">
-                  <span className="w-0 group-hover:w-2 h-[2px] bg-blue-400 transition-all duration-300"></span>
-                  Contact Us
-                </Link>
+                <Link href="/contact" className="hover:text-blue-400 transition-colors">Contact Us</Link>
               </li>
               <li>
-                <Link href="/privacy" className="hover:text-blue-400 transition-colors flex items-center gap-2 group">
-                  <span className="w-0 group-hover:w-2 h-[2px] bg-blue-400 transition-all duration-300"></span>
-                  Privacy Policy
-                </Link>
+                <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
               </li>
               <li>
-                <Link href="/disclaimer" className="hover:text-blue-400 transition-colors flex items-center gap-2 group">
-                  <span className="w-0 group-hover:w-2 h-[2px] bg-blue-400 transition-all duration-300"></span>
-                  Disclaimer
-                </Link>
-              </li>
-              <li>
-                <Link href="/terms" className="hover:text-blue-400 transition-colors flex items-center gap-2 group">
-                  <span className="w-0 group-hover:w-2 h-[2px] bg-blue-400 transition-all duration-300"></span>
-                  Terms & Conditions
-                </Link>
+                <Link href="/disclaimer" className="hover:text-white transition-colors">Disclaimer</Link>
               </li>
             </ul>
           </div>
 
-          {/* Socials */}
-          <div className="md:col-span-2">
-             <h4 className="mb-6 text-sm font-bold uppercase tracking-wider text-slate-200 flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.8)]"></span>
-              Connect
+          {/* Social Connect */}
+          <div className="md:col-span-4 lg:col-span-3">
+             <h4 className="mb-6 text-sm font-bold uppercase tracking-wider text-white">
+              Connect With Us
             </h4>
-            <div className="flex gap-4">
-              <a href="#" className="h-10 w-10 flex items-center justify-center rounded-full bg-[#151923] shadow-[4px_4px_8px_#0e1017,-4px_-4px_8px_#1c222f] text-slate-400 hover:text-blue-400 hover:shadow-[inset_2px_2px_5px_#0e1017,inset_-2px_-2px_5px_#1c222f] transition-all border border-white/5">
-                <Globe className="h-4 w-4" />
-              </a>
-              <a href="#" className="h-10 w-10 flex items-center justify-center rounded-full bg-[#151923] shadow-[4px_4px_8px_#0e1017,-4px_-4px_8px_#1c222f] text-slate-400 hover:text-blue-400 hover:shadow-[inset_2px_2px_5px_#0e1017,inset_-2px_-2px_5px_#1c222f] transition-all border border-white/5">
-                <MessageCircle className="h-4 w-4" />
-              </a>
-              <a href="#" className="h-10 w-10 flex items-center justify-center rounded-full bg-[#151923] shadow-[4px_4px_8px_#0e1017,-4px_-4px_8px_#1c222f] text-slate-400 hover:text-pink-400 hover:shadow-[inset_2px_2px_5px_#0e1017,inset_-2px_-2px_5px_#1c222f] transition-all border border-white/5">
-                <Share2 className="h-4 w-4" />
-              </a>
-            </div>
+            <p className="text-[14px] leading-relaxed mb-6 max-w-sm">
+              Join our Telegram channel to get instant notifications directly to your phone.
+            </p>
+            <a 
+              href="https://t.me/yourchannel" 
+              target="_blank" 
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 bg-slate-800 hover:bg-blue-600 text-white px-5 py-2.5 rounded-sm text-sm font-bold uppercase tracking-wide transition-colors"
+            >
+              <Send className="h-4 w-4" />
+              Join Telegram
+            </a>
           </div>
           
         </div>
 
-        {/* Dark Pressed Copyright Section */}
-        <div className="mt-16 rounded-3xl bg-[#151923] shadow-[inset_4px_4px_8px_#0e1017,inset_-4px_-4px_8px_#1c222f] p-6 flex flex-col md:flex-row items-center justify-between text-sm font-medium text-slate-500 border border-white/5">
-          <p>&copy; {new Date().getFullYear()} Nainix. All rights reserved.</p>
-          <div className="flex items-center gap-2 mt-4 md:mt-0">
-            <span>Made with</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="text-red-500 drop-shadow-[0_0_8px_rgba(239,68,68,0.5)]" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>
-            <span>in India</span>
+        {/* Bottom Section */}
+        <div className="mt-16 pt-8 flex flex-col md:flex-row items-center justify-between border-t border-slate-900 gap-4">
+          <p className="text-sm font-medium text-slate-500">
+            &copy; {new Date().getFullYear()} Nainix Updates. All rights reserved.
+          </p>
+          <div className="flex gap-4">
+            <a href="#" className="text-slate-600 hover:text-white transition-colors">
+              <Globe className="h-5 w-5" />
+            </a>
+            <a href="#" className="text-slate-600 hover:text-white transition-colors">
+              <MessageCircle className="h-5 w-5" />
+            </a>
+            <a href="#" className="text-slate-600 hover:text-white transition-colors">
+              <Share2 className="h-5 w-5" />
+            </a>
           </div>
         </div>
+
       </div>
     </footer>
   );

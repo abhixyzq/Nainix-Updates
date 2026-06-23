@@ -10,24 +10,24 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   metadataBase: new URL('https://update.nainix.me'),
   title: {
-    default: 'Nainix Updates | Official Jobs & Exam Results',
-    template: '%s | Nainix Updates',
+    default: 'Sarkari Result 2026, Latest Govt Jobs, Admit Card & Exam Updates',
+    template: '%s | Sarkari Result & Govt Jobs',
   },
-  description: 'The trusted portal for Indian students and job seekers to find the latest education updates, admit cards, government jobs, and exam results.',
-  keywords: ['Government Jobs', 'Exam Results', 'Admit Cards', 'Latest Jobs', 'Sarkari Result', 'Nainix Updates', 'Education News'],
+  description: 'Find the latest Sarkari Result, Sarkari Naukri updates, Govt Jobs, Admit Cards, Answer Keys, and Syllabus for SSC, UPSC, Railway, Banking, and State Police exams 2026.',
+  keywords: ['Sarkari Result', 'Sarkari Naukri', 'Latest Govt Jobs', 'Admit Card', 'Sarkari Result 2026', 'Exam Results', 'SSC', 'Railway', 'UPSC', 'Nainix Updates'],
   authors: [{ name: 'Nainix Updates' }],
   openGraph: {
-    title: 'Nainix Updates | Official Jobs & Exam Results',
-    description: 'Find the latest education updates, admit cards, government jobs, and exam results.',
+    title: 'Sarkari Result 2026, Latest Govt Jobs, Admit Card & Exam Updates',
+    description: 'Find the latest Sarkari Result, Sarkari Naukri updates, Govt Jobs, Admit Cards, Answer Keys, and Syllabus for SSC, UPSC, Railway, Banking, and State Police exams 2026.',
     url: 'https://update.nainix.me',
-    siteName: 'Nainix Updates',
+    siteName: 'Sarkari Result by Nainix Updates',
     locale: 'en_IN',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Nainix Updates | Official Jobs & Exam Results',
-    description: 'Find the latest education updates, admit cards, government jobs, and exam results.',
+    title: 'Sarkari Result 2026, Latest Govt Jobs, Admit Card & Exam Updates',
+    description: 'Find the latest Sarkari Result, Sarkari Naukri updates, Govt Jobs, Admit Cards, Answer Keys, and Syllabus for 2026.',
   },
   robots: {
     index: true,
@@ -66,6 +66,27 @@ export default function RootLayout({
         </main>
         
         <ConditionalFooter />
+        
+        {/* Structured Data for SEO */}
+        <Script
+          id="structured-data"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "name": "Nainix Updates",
+              "alternateName": ["Sarkari Result", "Sarkari Naukri 2026", "Govt Jobs"],
+              "url": "https://update.nainix.me",
+              "description": "Find the latest Sarkari Result, Sarkari Naukri updates, Govt Jobs, and Admit Cards.",
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": "https://update.nainix.me/?q={search_term_string}",
+                "query-input": "required name=search_term_string"
+              }
+            })
+          }}
+        />
       </body>
     </html>
   );

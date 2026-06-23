@@ -152,6 +152,7 @@ Raw Text: ${homepageText.slice(0, 50000)}`;
 Write a comprehensive, engaging, and highly structured 400-500 word blog post in Markdown format about this update. 
 The blog post must include headings (H2, H3), bullet points, and tables (if applicable) for sections like "Overview", "Important Dates", "Application Fee", "Vacancy Details", "Eligibility Criteria", and "How to Apply".
 Make the tone professional yet accessible. Do NOT include markdown code blocks for the overall JSON, just return a raw JSON object.
+CRITICAL INSTRUCTION: Do NOT use any HTML tags (like <td>, <tr>, rowspan, colspan, etc.) inside Markdown tables. Use strictly plain text. If a value applies to multiple rows, repeat the value in each row explicitly.
 
 Ensure the JSON keys exactly match these: 
 - title: (string, an SEO optimized, catchy title for this post)
