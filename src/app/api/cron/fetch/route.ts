@@ -181,13 +181,19 @@ Raw HTML: ${detailText.slice(0, 50000)}`;
           }
         });
         
-        // Send automatic Telegram notification
+        // Send automatic Telegram & Push notifications
         if (insertRes?.insertedId) {
           import('@/lib/telegram').then(m => m.sendTelegramMessage(
             deepDetails.title || item.title, 
             item.category, 
             insertRes.insertedId
           )).catch(err => console.error("Failed to load Telegram module:", err));
+
+          import('@/lib/onesignal').then(m => m.sendPushNotification(
+            deepDetails.title || item.title, 
+            item.category, 
+            insertRes.insertedId
+          )).catch(err => console.error("Failed to load OneSignal module:", err));
         }
         
         newUpdatesAdded++;

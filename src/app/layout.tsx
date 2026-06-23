@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import Script from 'next/script';
 import './globals.css';
 import { ConditionalNavbar, ConditionalFooter } from '@/components/ConditionalLayout';
+import { OneSignalInit } from '@/components/OneSignalInit';
 
 // Use a clean, modern font for trustworthiness
 const inter = Inter({ subsets: ['latin'] });
@@ -58,6 +59,7 @@ export default function RootLayout({
         ></script>
       </head>
       <body className={`${inter.className} flex min-h-screen flex-col bg-neu-light text-neu-text-heading antialiased transition-colors duration-300`}>
+        <OneSignalInit />
         <ConditionalNavbar />
         
         {/* Main Content Area */}

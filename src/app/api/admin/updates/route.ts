@@ -74,13 +74,19 @@ export async function POST(req: NextRequest) {
       document: data
     });
     
-    // Send automatic Telegram notification
+    // Send automatic Telegram & Push notifications
     if (result?.insertedId) {
       import('@/lib/telegram').then(m => m.sendTelegramMessage(
         data.title, 
         data.category, 
         result.insertedId
       )).catch(err => console.error("Failed to load Telegram module:", err));
+
+      import('@/lib/onesignal').then(m => m.sendPushNotification(
+        data.title, 
+        data.category, 
+        result.insertedId
+      )).catch(err => console.error("Failed to load OneSignal module:", err));
     }
     
     return NextResponse.json({ success: true, message: 'Created successfully', result });
