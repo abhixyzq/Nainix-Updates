@@ -75,7 +75,7 @@ export function Navbar() {
           <div className="flex items-center gap-3">
             {/* Telegram CTA */}
             <a
-              href="https://t.me/yourchannel"
+              href="https://t.me/nainix_updates"
               target="_blank"
               rel="noreferrer"
               className="hidden lg:flex items-center gap-2 rounded-sm bg-slate-900 hover:bg-blue-600 px-6 py-2.5 text-xs uppercase tracking-widest font-bold text-white transition-all shadow-sm"
@@ -158,7 +158,7 @@ export function Navbar() {
             
             <div className="mt-4 pt-4 border-t border-slate-100">
               <a
-                href="https://t.me/yourchannel"
+                href="https://t.me/nainix_updates"
                 target="_blank"
                 rel="noreferrer"
                 className="flex items-center justify-center gap-2 rounded-sm bg-slate-900 py-3 text-center text-sm font-bold uppercase tracking-wider text-white hover:bg-blue-600 transition-colors"

@@ -91,7 +91,7 @@ export function Footer() {
               Join our Telegram channel to get instant notifications directly to your phone.
             </p>
             <a 
-              href="https://t.me/yourchannel" 
+              href="https://t.me/nainix_updates" 
               target="_blank" 
               rel="noreferrer"
               className="inline-flex items-center gap-2 bg-slate-800 hover:bg-blue-600 text-white px-5 py-2.5 rounded-sm text-sm font-bold uppercase tracking-wide transition-colors"
