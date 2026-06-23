@@ -18,14 +18,14 @@ async function getAdmitCards() {
 }
 
 export const metadata = {
-  title: 'Admit Cards | Nainix Updates',
-  description: 'Download the latest admit cards and hall tickets for government exams on Nainix Updates.',
+  title: 'Sarkari Result Admit Card 2026 - Download Exam Hall Tickets',
+  description: 'Download the latest admit cards and hall tickets for SSC, UPSC, Railway, Police, and all government exams from Nainix Updates.',
   alternates: {
     canonical: '/admit-cards',
   },
   openGraph: {
-    title: 'Admit Cards | Nainix Updates',
-    description: 'Download the latest admit cards and hall tickets for government exams on Nainix Updates.',
+    title: 'Sarkari Result Admit Card 2026 - Download Exam Hall Tickets',
+    description: 'Download the latest admit cards and hall tickets for SSC, UPSC, Railway, Police, and all government exams.',
     url: '/admit-cards',
   },
 };

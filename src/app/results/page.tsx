@@ -18,14 +18,14 @@ async function getResults() {
 }
 
 export const metadata = {
-  title: 'Exam Results | Nainix Updates',
-  description: 'Check the latest government exam results, cut-offs, and merit lists on Nainix Updates.',
+  title: 'Sarkari Exam Results 2026 - Check Board & Govt Job Merit List',
+  description: 'Check your Sarkari Exam Results, Merit List, and Cut-off marks for SSC, Railway, UPSC, State Police, and Board Exams on Nainix Updates.',
   alternates: {
     canonical: '/results',
   },
   openGraph: {
-    title: 'Exam Results | Nainix Updates',
-    description: 'Check the latest government exam results, cut-offs, and merit lists on Nainix Updates.',
+    title: 'Sarkari Exam Results 2026 - Check Board & Govt Job Merit List',
+    description: 'Check your Sarkari Exam Results, Merit List, and Cut-off marks for SSC, Railway, UPSC, State Police, and Board Exams.',
     url: '/results',
   },
 };

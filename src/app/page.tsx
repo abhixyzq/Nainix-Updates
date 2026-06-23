@@ -239,15 +239,24 @@ export default async function HomePage() {
       {/* SEO Content Section (About Nainix Updates) */}
       <div className="container mx-auto px-4 max-w-7xl mb-12">
         <div className="rounded-sm bg-white border border-slate-300 p-8 md:p-12 prose prose-slate max-w-none text-slate-700 prose-headings:text-[#0A192F] prose-a:text-blue-600 shadow-sm">
-          <h2 className="text-2xl font-extrabold mb-4 uppercase tracking-tight">Welcome to Nainix Updates: India's Trusted Job Portal</h2>
-          <p className="font-medium leading-relaxed mb-4">
-            Nainix Updates is your ultimate destination for the fastest and most accurate information regarding <strong>Government Jobs (Sarkari Naukri), Admit Cards, Exam Results, Answer Keys, and Admission Notifications</strong> across India. We understand how crucial timely information is for a student or job seeker. Therefore, our dedicated team works round the clock to fetch updates directly from official government portals like SSC, UPSC, IBPS, RRB, and various state-level public service commissions.
+          <h2 className="text-2xl font-extrabold mb-4 uppercase tracking-tight">Sarkari Result 2026: Find Latest Govt Jobs & Sarkari Naukri Updates</h2>
+          <p className="font-medium leading-relaxed mb-6">
+            Welcome to <strong>Nainix Updates</strong>, your most trusted portal for finding the latest <strong>Sarkari Result</strong>, <strong>Sarkari Naukri</strong>, and <strong>Government Jobs</strong> across India. Whether you are a 10th pass student looking for your first job or a graduate preparing for UPSC, we provide the fastest and most accurate updates. We cover all major sectors including Railway (RRB), Staff Selection Commission (SSC), Banking (IBPS, SBI), Defense (Army, Navy, Air Force), and State Police recruitments.
           </p>
-          <p className="font-medium leading-relaxed mb-4">
-            Finding a legitimate direct link to download an admit card or check a result can be frustrating due to heavy server loads and fake websites. At Nainix Updates, we curate <strong>direct, safe, and fast links</strong> so you can avoid the hassle. Whether you are searching for the latest UP Police Constable Recruitment, SSC CHSL Notification, Railway Group D Admit Card, or CBSE Board Results, you will find it all here in one clean, easy-to-navigate dashboard.
+          
+          <h3 className="text-xl font-bold mb-3 mt-8">Download Admit Card & Exam Syllabus</h3>
+          <p className="font-medium leading-relaxed mb-6">
+            Before appearing for any competitive exam, downloading the <strong>Admit Card</strong> (Hall Ticket) and understanding the <strong>Exam Syllabus</strong> is crucial. We provide safe, direct links to download admit cards without the hassle of slow server issues. Along with the hall tickets, you can easily access the latest syllabus and exam patterns to boost your preparation. 
           </p>
+
+          <h3 className="text-xl font-bold mb-3 mt-8">Fastest Sarkari Exam Results & Answer Keys</h3>
+          <p className="font-medium leading-relaxed mb-6">
+            Waiting for your exam result can be stressful. We ensure that as soon as a board or commission releases a <strong>Sarkari Result</strong>, Merit List, or Cut-off marks, it is updated on our portal instantly. From UP Board, CBSE, to high-stakes exams like SSC CGL, RRB NTPC, and State PSCs, get your results and official <strong>Answer Keys</strong> with a single click. 
+          </p>
+
+          <h3 className="text-xl font-bold mb-3 mt-8">Why Choose Us for Latest Govt Jobs?</h3>
           <p className="font-medium leading-relaxed">
-            Apart from job listings, we also provide comprehensive <strong>Career Guidance and Exam Preparation Strategies</strong>. Our newly launched Blog section features expert articles, comparison guides (like Bank PO vs SSC CGL), and tips to check your results swiftly. Bookmark <strong>nainix.me</strong> today and stay one step ahead in your competitive exam journey.
+            Finding legitimate recruitment notifications online can be confusing due to fake websites. We curate verified, official notifications directly from employment news (Rojgar Samachar) and government portals. Bookmark our website today and never miss an update on <strong>Upcoming Sarkari Naukri</strong>, online application forms, and career guidance.
           </p>
         </div>
       </div>

@@ -37,13 +37,13 @@ export async function generateMetadata(
     : `Check out the latest updates for ${update.title} including important dates, eligibility, and direct links.`;
 
   return {
-    title: update.title,
+    title: `${update.title} - Apply Online, Notification & Eligibility | Sarkari Result`,
     description: desc,
     alternates: {
       canonical: `/update/${update._id}`,
     },
     openGraph: {
-      title: update.title,
+      title: `${update.title} - Sarkari Result`,
       description: desc,
       url: `/update/${update._id}`,
       type: 'article',
@@ -52,7 +52,7 @@ export async function generateMetadata(
     },
     twitter: {
       card: 'summary',
-      title: update.title,
+      title: `${update.title} - Sarkari Result`,
       description: desc,
     }
   };
